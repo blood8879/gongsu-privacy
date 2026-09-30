@@ -1,104 +1,265 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>공수장부 개인정보처리방침</title>
 <style>
-  :root { color-scheme: light dark; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
-    line-height: 1.7; max-width: 720px; margin: 0 auto; padding: 24px 20px 80px;
-    color: #1a1a1a; background: #fff;
+  :root {
+    --ground: #faf9f8;
+    --surface: #ffffff;
+    --ink: #31302e;
+    --ink-strong: #171615;
+    --ink-soft: #615d59;
+    --ink-faint: #8d8781;
+    --rule: #e6e6e6;
+    --accent: #0075de;
+    --accent-soft: #eaf3fc;
+    --good: #1aae39;
   }
   @media (prefers-color-scheme: dark) {
-    body { color: #e6e6e6; background: #121212; }
-    .summary { background: #1e2430 !important; }
-    table, th, td { border-color: #444 !important; }
-    th { background: #1e2430 !important; }
-    a { color: #8ab4f8; }
+    :root:not([data-theme="light"]) {
+      --ground: #171615;
+      --surface: #201f1d;
+      --ink: #e8e5e2;
+      --ink-strong: #f7f5f3;
+      --ink-soft: #a8a29b;
+      --ink-faint: #7d7770;
+      --rule: #33312e;
+      --accent: #64b0f5;
+      --accent-soft: #16283a;
+      --good: #4cc767;
+    }
   }
-  h1 { font-size: 1.7em; margin-bottom: 4px; }
-  h2 { font-size: 1.2em; margin-top: 2em; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
-  .date { color: #888; font-size: 0.95em; margin-bottom: 28px; }
-  .summary { background: #eef3fb; border-radius: 12px; padding: 18px 22px; margin: 24px 0; }
-  .summary strong { display: block; margin-top: 10px; }
-  .summary p { margin: 2px 0 0; font-size: 0.95em; }
-  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 0.95em; }
-  th, td { border: 1px solid #ccc; padding: 8px 10px; text-align: left; vertical-align: top; }
-  th { background: #f5f5f5; }
-  code { font-family: inherit; }
-  ul { padding-left: 22px; }
+  :root[data-theme="dark"] {
+    --ground: #171615;
+    --surface: #201f1d;
+    --ink: #e8e5e2;
+    --ink-strong: #f7f5f3;
+    --ink-soft: #a8a29b;
+    --ink-faint: #7d7770;
+    --rule: #33312e;
+    --accent: #64b0f5;
+    --accent-soft: #16283a;
+    --good: #4cc767;
+  }
+
+  html { background: var(--ground); }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
+      system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 3.5rem 1rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.75rem;
+  }
+  header { display: flex; flex-direction: column; gap: .6rem; }
+  .eyebrow { font-size: .8rem; letter-spacing: .12em; font-weight: 600; color: var(--accent); }
+  h1 {
+    margin: 0; font-size: 2rem; line-height: 1.3; font-weight: 800;
+    letter-spacing: -.02em; color: var(--ink-strong); text-wrap: balance;
+  }
+  .updated { font-size: .9rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .summary {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+    padding: 1.35rem 1.4rem; display: flex; flex-direction: column; gap: 1rem;
+  }
+  .summary h2 { margin: 0; font-size: .85rem; font-weight: 700; letter-spacing: .1em; color: var(--ink-faint); }
+  .facts { display: flex; flex-direction: column; gap: .9rem; }
+  .fact { display: flex; gap: .8rem; align-items: baseline; }
+  .fact-dot {
+    flex: none; width: .5rem; height: .5rem; border-radius: 50%;
+    background: var(--good); transform: translateY(-.15rem);
+  }
+  .fact-dot.blue { background: var(--accent); }
+  .fact-body { display: flex; flex-direction: column; gap: .1rem; }
+  .fact-title { font-weight: 700; color: var(--ink-strong); }
+  .fact-note { font-size: .92rem; color: var(--ink-soft); }
+  main { display: flex; flex-direction: column; gap: 2.25rem; }
+  section { display: flex; flex-direction: column; gap: .7rem; }
+  h2.clause {
+    margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--ink-strong);
+    letter-spacing: -.01em; display: flex; gap: .6rem; align-items: baseline;
+  }
+  .num { font-size: .82rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; flex: none; }
+  p { margin: 0; }
+  strong { color: var(--ink-strong); font-weight: 700; }
+  code { font-size: .9em; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; overflow-wrap: anywhere; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+  ul { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: .45rem; }
+  li::marker { color: var(--ink-faint); }
+  .table-scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 26rem; font-size: .95rem; }
+  th, td { text-align: left; padding: .7rem .8rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-size: .8rem; font-weight: 700; color: var(--ink-faint); letter-spacing: .04em; }
+  tr:last-child td { border-bottom: none; }
+  .callout { background: var(--accent-soft); border-radius: 10px; padding: 1rem 1.1rem; font-size: .95rem; color: var(--ink); }
+  footer {
+    border-top: 1px solid var(--rule); padding-top: 1.5rem; display: flex;
+    flex-direction: column; gap: .35rem; font-size: .95rem; color: var(--ink-soft);
+  }
+  .contact-mail { font-weight: 700; }
+  @media (max-width: 30rem) {
+    body { font-size: 16px; }
+    h1 { font-size: 1.65rem; }
+    .wrap { padding-top: 2.5rem; gap: 2.25rem; }
+  }
 </style>
 </head>
 <body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">공수장부</div>
+    <h1>개인정보처리방침</h1>
+    <div class="updated">최종 수정일 2026년 9월 30일</div>
+  </header>
 
-<h1>공수장부 개인정보처리방침</h1>
-<p class="date">최종 수정일: 2026년 8월 6일</p>
+  <div class="summary">
+    <h2>한눈에</h2>
+    <div class="facts">
+      <div class="fact">
+        <span class="fact-dot"></span>
+        <div class="fact-body">
+          <div class="fact-title">개발자는 아무것도 수집하지 않습니다</div>
+          <div class="fact-note">회원가입도 개발자 서버도 없습니다. 개발자는 여러분의 기록을 볼 수 없습니다.</div>
+        </div>
+      </div>
+      <div class="fact">
+        <span class="fact-dot"></span>
+        <div class="fact-body">
+          <div class="fact-title">기록은 기본적으로 이 휴대폰에만 저장됩니다</div>
+          <div class="fact-note">근무 기록·현장·급여 설정·사진은 이용자가 직접 보내지 않는 한 기기를 벗어나지 않습니다.</div>
+        </div>
+      </div>
+      <div class="fact">
+        <span class="fact-dot blue"></span>
+        <div class="fact-body">
+          <div class="fact-title">Google Drive 백업은 원하는 분만</div>
+          <div class="fact-note">평생권 이용자가 직접 Google 계정을 연결한 경우에만, 그 계정의 Drive 앱 전용 폴더에 백업본을 저장합니다.</div>
+        </div>
+      </div>
+      <div class="fact">
+        <span class="fact-dot blue"></span>
+        <div class="fact-body">
+          <div class="fact-title">광고 ID는 Google이 수집합니다</div>
+          <div class="fact-note">앱 실행 시 전면광고와 하단 배너를 위해 Google AdMob이 광고 식별자를 이용합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p>공수장부(이하 "앱")는 건설 일용직 근로자의 공수·급여 기록을 돕는 앱입니다.
-개발자는 이용자의 개인정보를 수집하지 않으며, 아래와 같이 처리 방침을 안내합니다.</p>
+  <main>
+    <section>
+      <h2 class="clause"><span class="num">01</span>개발자가 수집하는 정보 — 없음</h2>
+      <p>공수장부는 <strong>회원가입이 없고 개발자 서버를 운영하지 않습니다.</strong> 이용자가 입력한 근무 기록, 현장 정보, 급여·세금 설정, 메모, 사진은 이용자의 기기(와 이용자가 연결한 경우 이용자 본인의 Google Drive)에만 저장되며 <strong>개발자에게 전송되지 않습니다.</strong> 개발자는 이용자의 기록을 열람할 수 없습니다.</p>
+    </section>
 
-<div class="summary">
-  <strong>한눈에</strong>
-  <strong>· 개발자는 아무것도 수집하지 않습니다</strong>
-  <p>회원가입도 서버도 없습니다. 개발자는 여러분의 기록을 볼 수 없습니다.</p>
-  <strong>· 기록은 이 휴대폰에만 저장됩니다</strong>
-  <p>근무 기록·현장·급여 설정은 기기를 벗어나지 않습니다.</p>
-  <strong>· 광고 ID는 Google이 수집합니다</strong>
-  <p>하단 배너 광고를 위해 Google AdMob이 광고 식별자를 이용합니다.</p>
+    <section>
+      <h2 class="clause"><span class="num">02</span>저장되는 곳</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>저장 위치</th><th>내용</th><th>삭제 방법</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>앱 내부 저장소</td>
+              <td>근무 기록, 현장, 설정 데이터베이스, 첨부 사진</td>
+              <td>앱 삭제 시 함께 삭제</td>
+            </tr>
+            <tr>
+              <td>내장 저장소 <code>Documents/공수장부/</code> 또는 이용자가 지정한 폴더</td>
+              <td>자동 백업 파일</td>
+              <td>파일 앱에서 직접 삭제</td>
+            </tr>
+            <tr>
+              <td>이용자 본인의 Google Drive <strong>앱 전용 폴더</strong> (평생권 이용자가 연결한 경우만)</td>
+              <td>백업 파일(기록·설정·사진) — 최신본 1개와 월별 백업 최근 12개</td>
+              <td>앱의 백업 화면에서 연결 해제, 또는 drive.google.com › 설정 › 앱 관리 › 공수장부 › 숨겨진 앱 데이터 삭제</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>기기와 Drive의 백업 파일은 이용자가 직접 다른 곳으로 공유하지 않는 한 개발자나 제3자에게 전달되지 않습니다.</p>
+    </section>
+
+    <section>
+      <h2 class="clause"><span class="num">03</span>Google Drive 백업 (선택)</h2>
+      <p>평생권 이용자는 백업 화면에서 <strong>직접</strong> Google 계정을 연결해 자동 백업을 켤 수 있습니다. 연결하지 않으면 Google 계정에 전혀 접근하지 않습니다.</p>
+      <ul>
+        <li>요청 권한: <code>drive.appdata</code>(앱 전용 폴더 읽기·쓰기), 기본 프로필의 이메일 주소</li>
+        <li>앱은 <strong>이 앱이 만든 앱 전용 폴더만</strong> 볼 수 있으며, 이용자의 다른 Drive 파일·문서·사진에는 접근할 수 없습니다.</li>
+        <li>이메일 주소는 「연결됨: 이메일」 표시를 위해 기기에만 저장되며 개발자에게 전송되지 않습니다.</li>
+        <li>전송은 Google이 제공하는 암호화 연결(HTTPS)로 이루어지며, 백업 파일은 이용자의 Google 계정에 Google의 약관·정책에 따라 보관됩니다.</li>
+        <li>연결 해제와 앱 전용 폴더 삭제는 위 2항의 방법으로 언제든 할 수 있습니다.</li>
+      </ul>
+      <p>공수장부의 Google 사용자 데이터 사용은 <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API 서비스 사용자 데이터 정책</a>(제한적 사용 요건 포함)을 따릅니다.</p>
+    </section>
+
+    <section>
+      <h2 class="clause"><span class="num">04</span>광고 (Google AdMob)</h2>
+      <p>앱은 무료로 제공되며 앱을 실행할 때 전면광고를, 화면 하단에 배너 광고를 표시합니다(평생권 이용자에게는 표시하지 않습니다). 광고는 Google AdMob이 제공하며, 이 과정에서 <strong>Google이 광고 식별자(광고 ID)를 수집·이용</strong>할 수 있습니다.</p>
+      <ul>
+        <li>수집 주체: Google LLC (개발자가 아닙니다)</li>
+        <li>목적: 광고 게재 및 측정</li>
+        <li>Google의 정책: <a href="https://policies.google.com/technologies/ads">policies.google.com/technologies/ads</a></li>
+        <li>광고 ID 초기화·삭제: 기기 설정 › 개인정보 보호 › 광고</li>
+      </ul>
+      <p>유럽 등 해당 지역 이용자에게는 동의 화면(Google UMP)이 표시되며, 동의하지 않으면 맞춤 없는 광고가 게재됩니다.</p>
+    </section>
+
+    <section>
+      <h2 class="clause"><span class="num">05</span>결제</h2>
+      <p>평생권·증거팩 등 앱 내 구매는 Google Play 결제로 처리됩니다. 결제 정보는 Google이 처리하며 개발자는 카드 정보 등 결제 수단에 접근하지 않습니다.</p>
+    </section>
+
+    <section>
+      <h2 class="clause"><span class="num">06</span>앱이 요청하는 권한</h2>
+      <ul>
+        <li><strong>인터넷 / 네트워크 상태</strong> — 광고를 불러오고, 이용자가 켠 경우 Google Drive에 백업하기 위해 사용합니다. 인터넷이 없어도 기록·계산 등 앱의 기능은 정상 동작합니다.</li>
+        <li><strong>광고 ID</strong> — 위 4항의 광고 게재 목적.</li>
+        <li><strong>알림</strong>(선택) — 이용자가 켠 경우 주간·월간 요약과 매일 기록 알림을 보내기 위해 사용합니다. 알림 내용은 기기 안에서 만들어지며 외부로 전송되지 않습니다.</li>
+        <li><strong>Google 계정 로그인</strong>(선택) — 위 3항의 Drive 백업을 켤 때만.</li>
+      </ul>
+      <div class="callout">앱은 연락처, 위치, 통화기록 권한을 요청하지 않습니다. 기록에 첨부할 사진은 이용자가 고른 사진만 앱으로 가져옵니다.</div>
+    </section>
+
+    <section>
+      <h2 class="clause"><span class="num">07</span>제3자 제공 및 국외 이전</h2>
+      <p>개발자는 이용자 정보를 수집하지 않으므로 제3자에게 제공하는 정보가 없습니다. 광고 식별자는 Google의 정책에 따라 처리되며, Drive 백업은 이용자 본인의 Google 계정에 저장됩니다.</p>
+    </section>
+
+    <section>
+      <h2 class="clause"><span class="num">08</span>만 14세 미만 아동</h2>
+      <p>앱은 만 14세 미만 아동을 대상으로 하지 않으며, 아동의 개인정보를 고의로 수집하지 않습니다.</p>
+    </section>
+
+    <section>
+      <h2 class="clause"><span class="num">09</span>데이터 보관 및 삭제</h2>
+      <p>앱을 삭제하면 앱 내부 데이터가 함께 삭제됩니다. 기기의 백업 파일은 파일 앱에서, Drive 백업은 2항의 방법으로 이용자가 직접 삭제할 수 있습니다.</p>
+    </section>
+
+    <section>
+      <h2 class="clause"><span class="num">10</span>방침 변경</h2>
+      <p>방침이 변경되면 이 문서의 최종 수정일을 갱신하고, 중요한 변경은 앱 업데이트 노트로 안내합니다.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div>개인정보 관련 문의</div>
+    <div class="contact-mail">blood8879@gmail.com</div>
+  </footer>
 </div>
-
-<h2>1. 개발자가 수집하는 정보 — 없음</h2>
-<p>앱은 <strong>회원가입이 없고 서버를 운영하지 않습니다.</strong> 이용자가 입력한 근무 기록, 현장 정보,
-급여·세금 설정, 메모, 사진은 <strong>오직 이용자의 기기 안에만 저장</strong>되며 개발자에게 전송되지 않습니다.
-개발자는 이용자의 기록을 열람할 수 없습니다.</p>
-
-<h2>2. 기기에 저장되는 정보</h2>
-<table>
-  <tr><th>저장 위치</th><th>내용</th><th>삭제 방법</th></tr>
-  <tr><td>앱 내부 저장소</td><td>근무 기록, 현장, 설정 데이터베이스</td><td>앱 삭제 시 함께 삭제</td></tr>
-  <tr><td>내장 저장소 <code>Documents/공수장부/</code> 또는 이용자가 지정한 폴더</td><td>자동 백업 CSV 파일</td><td>파일 앱에서 직접 삭제</td></tr>
-</table>
-<p>백업 파일은 이용자가 직접 다른 곳으로 공유하지 않는 한 기기를 벗어나지 않습니다.</p>
-
-<h2>3. 광고 (Google AdMob)</h2>
-<p>앱은 무료로 제공되며 화면 하단에 배너 광고를 표시합니다. 광고는 Google AdMob이 제공하며,
-이 과정에서 <strong>Google이 광고 식별자(광고 ID)를 수집·이용</strong>할 수 있습니다.</p>
-<ul>
-  <li>수집 주체: Google LLC (개발자가 아님)</li>
-  <li>목적: 광고 게재 및 측정</li>
-  <li>Google의 정책: <a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></li>
-  <li>광고 ID 초기화·삭제: 기기 설정 &gt; 개인정보 보호 &gt; 광고</li>
-</ul>
-<p>유럽 등 해당 지역 이용자에게는 앱 실행 시 동의 화면(Google UMP)이 표시되며,
-동의하지 않으면 맞춤 없는 광고가 게재됩니다.</p>
-
-<h2>4. 앱이 요청하는 권한</h2>
-<ul>
-  <li><strong>인터넷 / 네트워크 상태</strong>: 광고를 불러오기 위해서만 사용합니다.
-  광고를 불러오지 못해도 앱의 모든 기능은 정상 동작합니다.</li>
-  <li><strong>광고 ID</strong>: 위 3항의 광고 게재 목적.</li>
-</ul>
-<p>앱은 연락처, 위치, 통화기록, 사진첩 전체 접근 등 어떤 개인정보 권한도 요청하지 않습니다.</p>
-
-<h2>5. 제3자 제공 및 국외 이전</h2>
-<p>개발자는 이용자 정보를 수집하지 않으므로 제3자에게 제공하는 정보가 없습니다.
-광고 식별자는 Google의 정책에 따라 처리됩니다.</p>
-
-<h2>6. 만 14세 미만 아동</h2>
-<p>앱은 만 14세 미만 아동을 대상으로 하지 않으며, 아동의 개인정보를 고의로 수집하지 않습니다.</p>
-
-<h2>7. 데이터 보관 및 삭제</h2>
-<p>모든 데이터는 이용자 기기에 있으므로, 앱을 삭제하면 앱 내부 데이터가 함께 삭제됩니다.
-백업 파일은 이용자가 파일 앱에서 직접 삭제할 수 있습니다.
-광고 ID는 기기 설정 &gt; 개인정보 보호 &gt; 광고에서 초기화하거나 삭제할 수 있습니다.</p>
-
-<h2>8. 방침 변경</h2>
-<p>방침이 변경되면 이 문서의 최종 수정일을 갱신하고, 중요한 변경은 앱 업데이트 노트로 안내합니다.</p>
-
-<h2>9. 문의</h2>
-<p>개인정보 관련 문의: <strong>blood8879@gmail.com</strong></p>
-
 </body>
 </html>
